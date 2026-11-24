@@ -1,0 +1,45 @@
+@if (cargando()) {
+  <p class="vacio">Cargando…</p>
+} @else if (resumen(); as r) {
+  <p class="nota-tab">Descarga tu resumen como imagen o compártelo con tus amigos.</p>
+
+  <div class="infografia" #tarjeta>
+    <h2>🌱 Mi Resumen EcoGasto</h2>
+    <p class="sub">Así vamos cuidando el planeta</p>
+    <div class="datos">
+      <div class="dato">
+        <span class="valor">{{ r.puntos | number }}</span>
+        <span class="etiqueta">Puntos</span>
+      </div>
+      <div class="dato">
+        <span class="valor">{{ r.retosCompletados }}</span>
+        <span class="etiqueta">Retos completados</span>
+      </div>
+      <div class="dato">
+        <span class="valor">{{ r.insignias }}</span>
+        <span class="etiqueta">Insignias</span>
+      </div>
+      <div class="dato">
+        <span class="valor">{{ r.costoUltimoMes | currency: 'PEN' : 'S/ ' : '1.2-2' }}</span>
+        <span class="etiqueta">Gasto último mes</span>
+      </div>
+    </div>
+    <p class="variacion" [class.baja]="r.variacionPct < 0" [class.sube]="r.variacionPct > 0">
+      @if (r.variacionPct < 0) {
+        📉 Bajaste tu gasto {{ -r.variacionPct | number: '1.0-1' }}% frente al mes anterior
+      } @else if (r.variacionPct > 0) {
+        📈 Tu gasto subió {{ r.variacionPct | number: '1.0-1' }}% frente al mes anterior
+      } @else {
+        Tu gasto se mantuvo igual que el mes anterior
+      }
+    </p>
+    <small class="marca">ecogasto.pe</small>
+  </div>
+
+  <div class="acciones">
+    <button type="button" class="btn-app" (click)="descargar()" [disabled]="generando()">⬇ Descargar imagen</button>
+    <button type="button" class="btn-app btn-app--claro" (click)="compartirWhatsapp()">WhatsApp</button>
+    <button type="button" class="btn-app btn-app--claro" (click)="compartirFacebook()">Facebook</button>
+    <button type="button" class="btn-app btn-app--claro" (click)="compartirInstagram()">Instagram</button>
+  </div>
+}

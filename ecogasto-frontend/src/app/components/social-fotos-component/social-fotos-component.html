@@ -1,0 +1,41 @@
+<div class="zona-subida">
+  <div class="icono">📸</div>
+  <h3>Comparte tus acciones sostenibles</h3>
+  <p>Pega la dirección (URL) de una foto y describe lo que hiciste.</p>
+  <form [formGroup]="form" (ngSubmit)="publicar()" novalidate>
+    <input type="url" formControlName="imagenUrl" placeholder="https://..." aria-label="URL de la foto" (change)="previsualizar()" (blur)="previsualizar()" />
+    @if (vistaPrevia() && !vistaRota()) {
+      <img class="previa" [src]="vistaPrevia()" alt="Vista previa de la foto" (error)="vistaRota.set(true)" />
+    }
+    @if (vistaRota()) {
+      <p class="form-msg error">No se pudo cargar la imagen de esa dirección.</p>
+    }
+    <textarea formControlName="contenido" maxlength="500" rows="3" placeholder="Describe tu acción sostenible" aria-label="Descripción"></textarea>
+    @if (mensaje()) {
+      <p class="form-msg error" role="alert">{{ mensaje() }}</p>
+    }
+    <button type="submit" class="btn-app" [disabled]="enviando()">Publicar foto</button>
+  </form>
+</div>
+
+<h3 class="subtitulo-tab">Fotos de la comunidad</h3>
+<div class="galeria">
+  @for (foto of fotos(); track foto.idPublicacion) {
+    <div class="foto">
+      <img [src]="foto.imagenUrl" [alt]="'Acción sostenible de ' + foto.username" loading="lazy" />
+      <div class="overlay"><strong>{{ foto.username }}</strong><br />{{ foto.contenido }}</div>
+    </div>
+  } @empty {
+    <p class="vacio">Todavía no hay fotos de la comunidad.</p>
+  }
+</div>
+
+<h3 class="subtitulo-tab">Ideas para inspirarte</h3>
+<div class="galeria">
+  @for (idea of ideas; track idea.titulo) {
+    <div class="foto">
+      <img [src]="idea.imagen" [alt]="idea.alt" />
+      <div class="overlay"><strong>{{ idea.titulo }}</strong><br />{{ idea.texto }}</div>
+    </div>
+  }
+</div>

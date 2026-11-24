@@ -1,0 +1,65 @@
+.nota-tab {
+  font-size: 14px;
+  color: var(--texto-suave);
+  margin: 0 0 14px;
+}
+
+.infografia {
+  max-width: 520px;
+  margin: 0 auto 18px;
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.infografia h2 {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sub {
+  opacity: 0.9;
+  margin: 4px 0 18px;
+}
+
+.datos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.dato {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.valor {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.etiqueta {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.variacion {
+  margin: 18px 0 8px;
+  font-weight: 600;
+}
+
+.marca {
+  opacity: 0.8;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}

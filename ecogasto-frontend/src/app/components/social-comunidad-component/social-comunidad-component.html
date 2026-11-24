@@ -1,0 +1,39 @@
+<form class="nueva" [formGroup]="form" (ngSubmit)="publicar()" novalidate>
+  <label for="commentInput" class="sr-only">¿Qué quieres compartir?</label>
+  <textarea id="commentInput" formControlName="contenido" maxlength="500" rows="3" placeholder="Comparte un avance o un consejo con la comunidad (máximo 500 caracteres)"></textarea>
+  <div class="fila-publicar">
+    <label for="publicacionImagenUrl" class="sr-only">URL de una foto</label>
+    <input type="url" id="publicacionImagenUrl" formControlName="imagenUrl" placeholder="URL de una foto (opcional)" />
+    <span class="contador">{{ longitud() }} / 500</span>
+    <button type="submit" class="btn-app" [disabled]="enviando()">Publicar</button>
+  </div>
+  @if (mensaje()) {
+    <p class="form-msg error" role="alert">{{ mensaje() }}</p>
+  }
+</form>
+
+@if (cargando()) {
+  <p class="vacio">Cargando…</p>
+}
+@for (p of lista(); track p.idPublicacion) {
+  <article class="comentario" [class.propia]="p.idUsuario === idUsuario">
+    <div class="cabecera">
+      <span class="avatar">{{ iniciales(p.username) }}</span>
+      <div class="autor">
+        <strong>{{ p.username }}{{ p.idUsuario === idUsuario ? ' (tú)' : '' }}</strong>
+        <small>{{ p.fecha | date: 'dd/MM/yyyy HH:mm' }}</small>
+      </div>
+      @if (p.idUsuario === idUsuario) {
+        <button type="button" class="btn-app btn-app--claro btn-app--pequeno borrar" (click)="borrar(p)">🗑 Eliminar</button>
+      }
+    </div>
+    <p class="texto">{{ p.contenido }}</p>
+    @if (p.imagenUrl) {
+      <img [src]="p.imagenUrl" alt="Foto compartida por {{ p.username }}" loading="lazy" />
+    }
+  </article>
+} @empty {
+  @if (!cargando()) {
+    <p class="vacio">Aún no hay publicaciones. ¡Sé el primero en compartir!</p>
+  }
+}
