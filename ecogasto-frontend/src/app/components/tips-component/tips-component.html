@@ -1,0 +1,68 @@
+<div class="app-vista">
+  <div class="app-encabezado">
+    <div>
+      <h1>💡 Eco Tip personalizado</h1>
+      <p>El consejo se basa en el servicio en el que más te alejas del promedio nacional en tu último mes registrado.</p>
+    </div>
+  </div>
+
+  <div class="app-bloque tip-principal">
+    @if (cargando()) {
+      <p class="vacio">Preparando tu consejo…</p>
+    } @else if (tip(); as t) {
+      <div class="tip-meta">
+        @if (t.origen) {
+          <span class="etiqueta-origen" [class]="origenIa() ? 'etiqueta-origen etiqueta-origen--ia' : 'etiqueta-origen etiqueta-origen--catalogo'">
+            {{ origenIa() ? 'Generado con IA' : 'Catálogo EcoGasto' }}
+          </span>
+        }
+        <span>{{ icono(t.recurso) }} {{ t.recurso }}</span>
+      </div>
+      <p class="texto-tip">{{ t.texto }}</p>
+      <div class="acciones-tip">
+        <button type="button" class="btn-app" [disabled]="valorado()" (click)="valorar(true)">✔️ Sí me sirvió</button>
+        <button type="button" class="btn-app btn-app--peligro" [disabled]="valorado()" (click)="valorar(false)">❌ No me ayudó</button>
+      </div>
+      @if (mensaje()) {
+        <p class="form-msg ok" role="status">{{ mensaje() }}</p>
+      }
+    } @else {
+      <p class="form-msg error">{{ mensaje() }}</p>
+      @if (sinLecturas()) {
+        <a routerLink="/consumo" class="btn-app">Ir a Mi Consumo</a>
+      }
+    }
+    @if (!cargando()) {
+      <button type="button" class="btn-app btn-app--claro otro" (click)="generar()">🔄 Generar otro tip</button>
+    }
+  </div>
+
+  <div class="consumo-layout">
+    <div class="app-bloque">
+      <h2>Más consejos de {{ tip()?.recurso?.toLowerCase() ?? 'tu servicio' }}</h2>
+      <ul class="lista-tips">
+        @for (item of catalogo(); track item.idTip) {
+          <li>
+            {{ item.texto }}
+            <small>Pensado para: {{ item.segmento }}</small>
+          </li>
+        } @empty {
+          <li>Aún no hay consejos en el catálogo para este servicio.</li>
+        }
+      </ul>
+    </div>
+    <div class="app-bloque">
+      <h2>Tus tips de esta sesión</h2>
+      <ul class="lista-tips">
+        @for (item of historial(); track item.idRecomendacion) {
+          <li>
+            {{ item.texto }}
+            <small>{{ item.recurso }}</small>
+          </li>
+        } @empty {
+          <li>Aquí aparecerán los tips que vayas generando.</li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

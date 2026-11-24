@@ -1,0 +1,67 @@
+@if (modoApp()) {
+  <header class="app-barra">
+    <button matIconButton [matMenuTriggerFor]="menu" aria-label="Abrir menú"><mat-icon>menu</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/hogar"><mat-icon>home</mat-icon><span>Mi hogar</span></button>
+      <button mat-menu-item routerLink="/estadisticas"><mat-icon>insights</mat-icon><span>Estadísticas locales</span></button>
+      <button mat-menu-item routerLink="/notificaciones"><mat-icon>notifications</mat-icon><span>Notificaciones</span></button>
+      <button mat-menu-item routerLink="/social"><mat-icon>public</mat-icon><span>Social Media</span></button>
+      <button mat-menu-item (click)="cerrarSesion()"><mat-icon>logout</mat-icon><span>Cerrar sesión</span></button>
+    </mat-menu>
+
+    <div class="app-marca">
+      <img src="images/LOGO.png" alt="" />
+      EcoGasto
+    </div>
+
+    <nav class="app-nav" aria-label="Secciones">
+      <ul>
+        <li><a routerLink="/consumo" routerLinkActive="activo">Mi Consumo</a></li>
+        <li><a routerLink="/impacto" routerLinkActive="activo">Impacto</a></li>
+        <li><a routerLink="/tips" routerLinkActive="activo">Tips</a></li>
+        <li><a routerLink="/comparar" routerLinkActive="activo">Comparar Hogares</a></li>
+      </ul>
+    </nav>
+
+    <a class="app-campana" routerLink="/notificaciones" aria-label="Notificaciones">
+      🔔
+      @if (notificaciones.noLeidas() > 0) {
+        <span class="app-badge">{{ notificaciones.noLeidas() }}</span>
+      }
+    </a>
+
+    <div class="app-usuario">
+      <span>Sesión de</span>
+      <strong>{{ username() }}</strong>
+    </div>
+  </header>
+} @else {
+  <header class="MenuNavegador">
+    <div class="ContenedorLogo">
+      <div class="logo">
+        <img src="images/LOGO.png" alt="Logo de EcoGasto" class="logo-img" />
+      </div>
+      <div class="logoTexto">
+        <h1>EcoGasto</h1>
+        <p>No heredamos la Tierra de nuestros antepasados,<br />la tomamos prestada de nuestros hijos.</p>
+      </div>
+    </div>
+
+    <nav aria-label="Navegación principal">
+      <ul class="nav-links">
+        <li><a routerLink="/home" fragment="Inicio">Inicio</a></li>
+        <li><a routerLink="/home" fragment="Modulos">¿Cómo funciona?</a></li>
+        @if (auth.logueado()) {
+          <li><a [routerLink]="destinoCuenta()">Mi cuenta</a></li>
+        } @else {
+          <li><a routerLink="/login">Regístrate</a></li>
+        }
+        <li><a routerLink="/admin">Administración</a></li>
+      </ul>
+    </nav>
+
+    <a [routerLink]="auth.logueado() ? destinoCuenta() : '/login'" class="ContenedorFotoPerfil" title="Mi cuenta">
+      <img src="images/Perfil.png" alt="Cuenta" class="avatar-img" />
+    </a>
+  </header>
+}

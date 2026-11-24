@@ -1,0 +1,10 @@
+.lista-terminos {
+  margin: 0 0 8px 20px;
+}
+
+.lista-terminos li {
+  list-style: decimal;
+  margin-bottom: 8px;
+  font-size: 14.5px;
+  color: #333333;
+}
