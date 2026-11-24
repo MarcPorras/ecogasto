@@ -1,0 +1,12 @@
+<div class="cabecera">
+  <h2 mat-dialog-title>{{ titulo }}</h2>
+  <button matIconButton mat-dialog-close aria-label="Cerrar"><mat-icon>close</mat-icon></button>
+</div>
+<mat-dialog-content>
+  <div class="caja">
+    <app-grafico [etiquetas]="etiquetas" [series]="series()" [tituloY]="unidad" />
+  </div>
+  <p class="nota-demo">
+    Datos de un hogar de ejemplo. El promedio nacional sale de la tabla de tarifas que mantiene el administrador. Regístrate para ver tu propio consumo.
+  </p>
+</mat-dialog-content>

@@ -1,0 +1,18 @@
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 8px;
+}
+
+.caja {
+  position: relative;
+  height: 320px;
+  min-width: min(620px, 80vw);
+}
+
+.nota-demo {
+  font-size: 13px;
+  color: #666666;
+  margin-top: 10px;
+}

@@ -1,0 +1,96 @@
+<div class="app-vista">
+  <div class="app-encabezado">
+    <div>
+      <h1>🌍 Impacto ambiental de tu consumo</h1>
+      <p>Traducimos tus lecturas del mes a kilogramos de CO₂ y a litros de agua para que veas tu huella.</p>
+    </div>
+    <div class="controles">
+      <label for="impactoPeriodo">Mes</label>
+      <select id="impactoPeriodo" (change)="cambiarPeriodo($any($event.target).value)">
+        @for (p of periodos(); track p.clave) {
+          <option [value]="p.clave" [selected]="p.clave === periodoClave()">{{ p.etiqueta }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  @if (cargando()) {
+    <p class="vacio">Calculando tu impacto…</p>
+  } @else if (periodos().length === 0) {
+    <div class="app-bloque vacio">
+      No tienes lecturas registradas. Registra tu consumo en <strong>Mi Consumo</strong> para calcular tu impacto.
+      <br /><br />
+      <a routerLink="/consumo" class="btn-app">Ir a Mi Consumo</a>
+    </div>
+  } @else {
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-valor">{{ totales().co2 | number: '1.0-2' }} kg CO₂</div>
+        <div class="kpi-etiqueta">Huella de carbono estimada del mes</div>
+      </div>
+      <div class="kpi kpi--azul">
+        <div class="kpi-valor">{{ totales().litros | number: '1.0-0' }} litros</div>
+        <div class="kpi-etiqueta">Agua consumida por todo el hogar en el mes</div>
+      </div>
+      <div class="kpi kpi--amarillo">
+        <div class="kpi-valor">S/ {{ totales().costo | number: '1.2-2' }}</div>
+        <div class="kpi-etiqueta">Gasto estimado del mes</div>
+      </div>
+    </div>
+
+    <div class="consumo-layout">
+      <div class="app-bloque">
+        <h2>Detalle por servicio</h2>
+        <div class="tabla-scroll">
+          <table class="tabla-app">
+            <thead>
+              <tr>
+                <th>Servicio</th>
+                <th class="num">Valor</th>
+                <th>Unidad</th>
+                <th class="num">kg CO₂</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (fila of impactos(); track fila.recurso) {
+                <tr>
+                  <td>{{ icono(fila.recurso) }} {{ fila.recurso }}</td>
+                  <td class="num">{{ fila.valor | number: '1.0-2' }}</td>
+                  <td>{{ fila.unidad }}</td>
+                  <td class="num">{{ fila.co2Kg | number: '1.0-2' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        @if (mayorEmisor(); as emisor) {
+          <p class="bloque-nota nota-final">
+            Tu mayor huella del mes viene de <strong>{{ emisor.recurso.toLowerCase() }}</strong>. Reducir ese servicio es lo que más ayuda al planeta.
+          </p>
+        }
+      </div>
+
+      <div class="app-bloque">
+        <h2>Comparación con el promedio nacional</h2>
+        <p class="bloque-nota">Se compara cada servicio del mes elegido con el promedio nacional de referencia de tu zona.</p>
+        <button type="button" class="btn-app" (click)="comparar()">Comparar ahora</button>
+
+        @if (comparaciones(); as lista) {
+          <ul class="resultado">
+            @for (fila of lista; track fila.recurso) {
+              <li>
+                <span>{{ icono(fila.recurso) }} {{ fila.recurso }}</span>
+                <span [class.dif-mas]="fila.diferenciaPct > 0" [class.dif-menos]="fila.diferenciaPct <= 0">
+                  {{ fila.diferenciaPct > 0 ? '+' : '' }}{{ fila.diferenciaPct | number: '1.0-1' }}%
+                </span>
+                <small>{{ fila.miValor | number: '1.0-1' }} vs {{ fila.promedioReferencia | number: '1.0-1' }}</small>
+              </li>
+            } @empty {
+              <li>No hay datos para comparar en este mes.</li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  }
+</div>
