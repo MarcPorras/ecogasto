@@ -1,0 +1,7 @@
+@if (!enAdmin) {
+  <app-nav-bar />
+}
+<router-outlet />
+@if (!enAdmin) {
+  <footer class="site-footer">© 2026 EcoGasto. Todos los derechos reservados.</footer>
+}
