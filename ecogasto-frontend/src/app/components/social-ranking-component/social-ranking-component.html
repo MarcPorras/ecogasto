@@ -1,0 +1,56 @@
+<div class="filtros">
+  <mat-form-field appearance="outline">
+    <mat-label>Zona</mat-label>
+    <mat-select [ngModel]="zona()" (ngModelChange)="cambiarZona($event)">
+      <mat-option value="">Todas</mat-option>
+      @for (z of zonas(); track z.idZona) {
+        <mat-option [value]="z.nombre">{{ z.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Segmento</mat-label>
+    <mat-select [ngModel]="segmento()" (ngModelChange)="cambiarSegmento($event)">
+      <mat-option value="">Todos</mat-option>
+      @for (s of segmentos; track s) {
+        <mat-option [value]="s">{{ s }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (cargando()) {
+  <p class="vacio">Cargando…</p>
+} @else {
+  <div class="tabla-scroll">
+    <table class="tabla-app">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Usuario</th>
+          <th>Zona</th>
+          <th>Segmento</th>
+          <th>Puntos</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of top(); track r.posicion) {
+          <tr [class.propia]="r.username === usuario">
+            <td>{{ medalla(r.posicion) }}</td>
+            <td>{{ r.username }}{{ r.username === usuario ? ' (tú)' : '' }}</td>
+            <td>{{ r.zona }}</td>
+            <td>{{ r.segmento }}</td>
+            <td>{{ r.puntos }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="vacio">No hay datos para este filtro.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (propioFuera(); as p) {
+    <p class="tu-posicion">Tu posición: <strong>#{{ p.posicion }}</strong> con {{ p.puntos }} puntos</p>
+  }
+}

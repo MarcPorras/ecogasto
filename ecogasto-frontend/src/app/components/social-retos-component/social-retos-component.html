@@ -1,0 +1,64 @@
+@if (cargando()) {
+  <p class="vacio">Cargando…</p>
+} @else {
+  <h3 class="subtitulo-tab">🎯 Retos disponibles</h3>
+  <div class="retos">
+    @for (reto of activos(); track reto.idReto) {
+      <div class="reto">
+        <div class="reto-info">
+          <strong>{{ reto.titulo }}</strong>
+          <p>{{ reto.descripcion }}</p>
+          <small>{{ reto.recurso }} · Meta: reducir {{ reto.metaPorcentaje }}% · {{ reto.puntos }} pts</small>
+        </div>
+        @if (idsUnidos().has(reto.idReto!)) {
+          <span class="etiqueta-unido">Ya participas</span>
+        } @else {
+          <button type="button" class="btn-app btn-app--pequeno" [disabled]="ocupado() === reto.idReto" (click)="unirse(reto)">Unirme</button>
+        }
+      </div>
+    } @empty {
+      <p class="vacio">No hay retos activos por ahora.</p>
+    }
+  </div>
+
+  <h3 class="subtitulo-tab">⏳ Mis retos en curso</h3>
+  <div class="retos">
+    @for (mio of enCurso(); track mio.idRetoUsuario) {
+      <div class="reto">
+        <div class="reto-info">
+          <strong>{{ mio.reto }}</strong>
+          <small>En curso</small>
+        </div>
+        <button type="button" class="btn-app btn-app--pequeno" [disabled]="ocupado() === mio.idReto" (click)="completar(mio)">Completar</button>
+      </div>
+    } @empty {
+      <p class="vacio">No tienes retos en curso.</p>
+    }
+  </div>
+
+  <h3 class="subtitulo-tab">✅ Retos completados</h3>
+  <div class="retos">
+    @for (mio of completados(); track mio.idRetoUsuario) {
+      <div class="reto reto--listo">
+        <div class="reto-info">
+          <strong>{{ mio.reto }}</strong>
+          <small>Completado</small>
+        </div>
+      </div>
+    } @empty {
+      <p class="vacio">Aún no completaste retos.</p>
+    }
+  </div>
+
+  <h3 class="subtitulo-tab">🏅 Mis insignias</h3>
+  <div class="insignias">
+    @for (insignia of insignias(); track insignia.idInsignia) {
+      <div class="insignia">
+        <span class="insignia-icono">{{ icono(insignia) }}</span>
+        <strong>{{ insignia.nombre }}</strong>
+      </div>
+    } @empty {
+      <p class="vacio">Completa retos para ganar insignias.</p>
+    }
+  </div>
+}

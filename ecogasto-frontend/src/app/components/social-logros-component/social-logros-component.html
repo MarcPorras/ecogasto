@@ -1,0 +1,56 @@
+<p class="nota-tab">Tus logros salen de los retos que completaste y de las insignias que ganaste.</p>
+
+@if (cargando()) {
+  <p class="vacio">Cargando…</p>
+} @else if (completados().length === 0 && insignias().length === 0) {
+  <div class="vacio">
+    <p>Aún no tienes logros.</p>
+    <br />
+    <button type="button" class="btn-app" (click)="verRetos.emit()">Ver retos sostenibles</button>
+  </div>
+} @else {
+  @if (resumen(); as r) {
+    <div class="achievement-card">
+      <div class="achievement-header">
+        <div class="achievement-title">🌟 Tu progreso en EcoGasto</div>
+      </div>
+      <div class="achievement-stats">
+        <div class="stat-item">
+          <div class="stat-value">{{ r.puntos }}</div>
+          <div class="stat-label">Puntos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{{ r.retosCompletados }}</div>
+          <div class="stat-label">Retos completados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{{ r.insignias }}</div>
+          <div class="stat-label">Insignias</div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @for (reto of completados(); track reto.idRetoUsuario) {
+    <div class="achievement-card">
+      <div class="achievement-header">
+        <div class="achievement-title">✅ {{ reto.reto }}</div>
+        <div class="achievement-date">{{ reto.fechaCompletado | date: 'dd/MM/yyyy' }}</div>
+      </div>
+      <p class="detalle">Reto completado</p>
+    </div>
+  }
+
+  @if (insignias().length > 0) {
+    <h3 class="subtitulo-tab">🏅 Insignias obtenidas</h3>
+    <div class="insignias">
+      @for (insignia of insignias(); track insignia.idInsignia) {
+        <div class="insignia-card">
+          <span class="insignia-icono">{{ icono(insignia) }}</span>
+          <strong>{{ insignia.nombre }}</strong>
+          <small>{{ insignia.puntosRequeridos }} pts · {{ insignia.fechaObtencion | date: 'dd/MM/yyyy' }}</small>
+        </div>
+      }
+    </div>
+  }
+}

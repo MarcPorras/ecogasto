@@ -1,0 +1,19 @@
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.filtros mat-form-field {
+  min-width: 220px;
+}
+
+tr.propia td {
+  background: #e8f5e9;
+  font-weight: 700;
+}
+
+.tu-posicion {
+  margin-top: 14px;
+  color: var(--verde-oscuro);
+}

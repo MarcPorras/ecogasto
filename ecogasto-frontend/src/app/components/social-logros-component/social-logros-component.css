@@ -1,0 +1,95 @@
+.nota-tab {
+  font-size: 14px;
+  color: var(--texto-suave);
+  margin: 0 0 14px;
+}
+
+.subtitulo-tab {
+  color: var(--verde-oscuro);
+  margin: 22px 0 10px;
+  font-size: 17px;
+}
+
+.achievement-card {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.achievement-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.achievement-date {
+  color: #666666;
+  font-size: 14px;
+}
+
+.detalle {
+  margin: 0;
+  color: #555555;
+}
+
+.achievement-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 15px;
+}
+
+.stat-item {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666666;
+  margin-top: 5px;
+}
+
+.insignias {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.insignia-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.insignia-icono {
+  font-size: 42px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.insignia-card small {
+  display: block;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
