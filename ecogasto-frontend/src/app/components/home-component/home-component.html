@@ -1,0 +1,107 @@
+<main>
+  <section class="Bienvenida" id="Inicio">
+    <div class="contenedor-tarjetas">
+      <div class="tarjetaSobreNosotros">
+        <img src="images/SobreNosotros.jpg" alt="Familia revisando su consumo" />
+        <h1>Sobre Nosotros</h1>
+        <p>
+          EcoGasto es una plataforma inteligente que ayuda a las<br />
+          familias peruanas a tomar control de su consumo diario de<br />
+          agua, luz, gas y transporte.
+        </p>
+      </div>
+
+      <div class="Mision">
+        <img src="images/Mision.jpg" alt="Ahorro en el hogar" />
+        <h1>Misión</h1>
+        <p>
+          Ayudamos a las familias a ahorrar y vivir de forma más sostenible,<br />
+          con tecnología que hace visible lo invisible.
+        </p>
+      </div>
+
+      <div class="Vision">
+        <img src="images/Vision.jpg" alt="Futuro sostenible" />
+        <h1>Visión</h1>
+        <p>
+          Construir un futuro donde cada hogar peruano sea consciente,<br />
+          eficiente y sostenible gracias al poder de la tecnología y de la<br />
+          responsabilidad ecológica.
+        </p>
+      </div>
+    </div>
+
+    <div class="BtnEmpiezaCmabio">
+      <p class="txtEmpiezaCmabio">¿Estás listo para ahorrar más y vivir mejor?</p>
+      <div>
+        <a href="#SesionEcoGasto" class="BtnEmpCambio" (click)="irASesion($event, true)">Empieza el cambio</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="Modulos_Que_Ofrecemos" id="Modulos">
+    <div class="BotonesXconsumo">
+      <a href="#" class="btn1" (click)="mostrarDetalle($event)"><div class="texto">📈 Mi Consumo</div></a>
+      <a href="#" class="btn2" (click)="pedirRegistro($event)"><div class="texto">🚨 Eco Alertas</div></a>
+      <a href="#" class="btn3" (click)="pedirRegistro($event)"><div class="texto">💡 Eco Tips</div></a>
+      <a href="#" class="btn4" (click)="pedirRegistro($event)"><div class="texto">👨‍👩‍👧 Hogar</div></a>
+    </div>
+
+    <div class="ContenedorConocenos">
+      <div class="ImgConsumo" [class.ocultar]="detalleVisible()">
+        <video class="videoC" autoplay muted loop playsinline>
+          <source src="images/VIDEO_SECCION2.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="DetalleConsumoOculto" [class.mostrar]="detalleVisible()">
+        <div class="ImagenBt1">
+          <img src="images/btn1.jpg" class="imgBanner" alt="Control del consumo" />
+        </div>
+        <div class="Btn1Texto">
+          <p class="EncabezadoBt1">Ahorra más y vive mejor con EcoGasto</p>
+          <h2>Control Inteligente de Consumo</h2>
+          <p class="txtBt1">
+            Controla y compara tu consumo mensual de agua, luz, gas y transporte.<br />
+            Pulsa una tarjeta para ver un ejemplo del gráfico que tendrás al registrarte.
+          </p>
+        </div>
+      </div>
+
+      <div class="DetalleTarjetasConsumoOculto" [class.mostrar]="detalleVisible()">
+        <button class="TarjetaConsumo" type="button" (click)="verEjemplo('Luz')">
+          <img src="images/IconLuz.png" alt="" class="IconoLuz" />
+          <h3>⚡ Tu ahorro empieza al<br />encender el foco</h3>
+          <p>
+            El 60% del consumo eléctrico en casa viene de<br />
+            electrodomésticos ineficientes. EcoGasto te<br />
+            sugiere alternativas y hábitos para gastar menos.
+          </p>
+        </button>
+
+        <button class="TarjetaConsumo" type="button" (click)="verEjemplo('Agua')">
+          <h3>¿Cuánta agua usas realmente?</h3>
+          <p>
+            Una ducha 🚿 de 10 minutos consume<br />
+            hasta 200 litros de agua. Con EcoGasto,<br />
+            identifica excesos y reduce tu gasto hídrico.
+          </p>
+          <br />
+          <img src="images/IconAgua.png" alt="" class="IconoAgua" />
+        </button>
+
+        <button class="TarjetaConsumo" type="button" (click)="verEjemplo('Gas')">
+          <img src="images/IconGas.png" alt="" class="IconoGas" />
+          <h3>🔥 Controla tu cocina y tu bolsillo</h3>
+          <p>
+            El mal uso del gas encarece tus cuentas y<br />
+            eleva tu huella ambiental. Con EcoGasto, conoce<br />
+            patrones de uso y recibe consejos personalizados.
+          </p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <app-login-component id="SesionEcoGasto" [embebido]="true" />
+</main>

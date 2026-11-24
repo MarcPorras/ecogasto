@@ -1,0 +1,437 @@
+:host {
+  display: block;
+  overflow-x: hidden;
+}
+
+.Bienvenida {
+  position: relative;
+  background-image: url('/images/FondoMenu.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: calc(100vh - 70px);
+  padding: 180px 60px 60px;
+  scroll-margin-top: 0;
+}
+
+.Bienvenida::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.Bienvenida > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contenedor-tarjetas {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.tarjetaSobreNosotros,
+.Mision,
+.Vision {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 260px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.tarjetaSobreNosotros img,
+.Mision img,
+.Vision img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.tarjetaSobreNosotros h1,
+.Mision h1,
+.Vision h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.BtnEmpiezaCmabio {
+  margin-top: -100px;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.txtEmpiezaCmabio {
+  margin: 1rem 0;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  text-align: center;
+  max-width: 600px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.BtnEmpCambio {
+  display: inline-block;
+  background: rgba(85, 107, 47, 0.7);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.BtnEmpCambio:hover {
+  background-color: #4b6d3b;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.Modulos_Que_Ofrecemos {
+  position: relative;
+  z-index: 2;
+  background-image: url('/images/FondoSeccion2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 40px 100px 60px;
+  padding-left: 27%;
+  padding-top: 0;
+  margin-top: -50px;
+  margin-bottom: 0;
+  border: 4px solid #a3d45d;
+  box-sizing: border-box;
+  scroll-margin-top: 110px;
+}
+
+.Modulos_Que_Ofrecemos > .ContenedorConocenos {
+  position: relative;
+  z-index: 1;
+}
+
+.BotonesXconsumo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 40px 50px;
+  margin-top: 30px;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: aparecerBoton 0.6s forwards;
+  border-top: 5px solid #1b5e20;
+  border-bottom: 5px solid #1b5e20;
+  border-radius: 20px;
+}
+
+.BotonesXconsumo a {
+  background-color: #1b5e20;
+  color: white;
+  font-size: 1.2rem;
+  padding: 16px 32px;
+  border-radius: 16px;
+  margin: 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.BotonesXconsumo a:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.BotonesXconsumo .texto {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@keyframes aparecerBoton {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ContenedorConocenos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 40px;
+}
+
+.ImgConsumo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 30px;
+  margin-left: 85px;
+}
+
+.videoC {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+.ImgConsumo,
+.DetalleConsumoOculto,
+.DetalleTarjetasConsumoOculto {
+  position: relative;
+  width: 100%;
+  height: auto;
+  transition:
+    transform 0.6s ease-in-out,
+    opacity 0.6s ease-in-out;
+}
+
+.ImgConsumo {
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 1;
+}
+
+.ImgConsumo.ocultar {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.DetalleConsumoOculto {
+  width: 90%;
+  margin: -50px auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 2rem;
+}
+
+.DetalleConsumoOculto,
+.DetalleTarjetasConsumoOculto {
+  transform: translateX(100%);
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.6s ease;
+}
+
+.DetalleConsumoOculto.mostrar,
+.DetalleTarjetasConsumoOculto.mostrar {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+  overflow: visible;
+}
+
+.ImagenBt1 {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgBanner {
+  width: 100%;
+}
+
+.Btn1Texto {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.EncabezadoBt1 {
+  margin: 1rem 0;
+  font-size: 1rem;
+  line-height: 1rem;
+  text-align: justify;
+}
+
+.Btn1Texto h2 {
+  font-size: 32px;
+  color: #097c29;
+  font-weight: 700;
+}
+
+.txtBt1 {
+  margin: 2rem 0;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  text-align: justify;
+}
+
+.DetalleTarjetasConsumoOculto {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+  margin-top: -50px;
+  padding: 20px 40px;
+}
+
+.DetalleTarjetasConsumoOculto.mostrar {
+  z-index: 1;
+}
+
+.TarjetaConsumo {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  background: #f5fdf5;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  width: 220px;
+  flex-shrink: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.TarjetaConsumo:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.TarjetaConsumo img {
+  width: 30px;
+}
+
+.TarjetaConsumo .IconoAgua {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.TarjetaConsumo p {
+  text-align: center;
+}
+
+app-login-component {
+  display: block;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .Bienvenida {
+    padding: 260px 20px 60px;
+  }
+
+  .contenedor-tarjetas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tarjetaSobreNosotros,
+  .Mision,
+  .Vision {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .BtnEmpiezaCmabio {
+    padding: 0 20px;
+    margin-top: 10px;
+  }
+
+  .txtEmpiezaCmabio {
+    font-size: 1.1rem;
+  }
+
+  .Modulos_Que_Ofrecemos {
+    padding: 60px 20px;
+  }
+
+  .BotonesXconsumo {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .BotonesXconsumo a {
+    width: 40%;
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  .ContenedorConocenos {
+    height: auto;
+    padding: 20px;
+  }
+
+  .ImgConsumo {
+    margin-left: 0;
+  }
+
+  .DetalleTarjetasConsumoOculto {
+    flex-wrap: wrap;
+    padding: 20px 0;
+  }
+
+  .ImagenBt1,
+  .Btn1Texto {
+    padding: 10px;
+  }
+
+  .imgBanner {
+    width: 90%;
+  }
+
+  .txtBt1 {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .BotonesXconsumo a {
+    width: 100%;
+  }
+
+  .txtEmpiezaCmabio {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .txtBt1 {
+    font-size: 0.95rem;
+    line-height: 1.4rem;
+  }
+}

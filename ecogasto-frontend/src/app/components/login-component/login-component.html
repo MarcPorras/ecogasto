@@ -1,0 +1,100 @@
+<section class="SesionEcoGasto">
+  <div class="container" [class.active]="modoRegistro()">
+    <div class="form-box login">
+      <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()" novalidate>
+        <h1>Inicia Sesión</h1>
+
+        <div class="input-box">
+          <input type="text" placeholder="Usuario" formControlName="username" autocomplete="username" aria-label="Usuario" />
+          <i class="bx bxs-user"></i>
+        </div>
+
+        <div class="input-box">
+          <input type="password" placeholder="Contraseña" formControlName="password" autocomplete="current-password" aria-label="Contraseña" />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        @if (mensajeLogin()) {
+          <p class="form-msg error" role="alert">{{ mensajeLogin() }}</p>
+        }
+        @if (registroExitoso()) {
+          <p class="form-msg ok">¡Registro exitoso! Ya puedes iniciar sesión.</p>
+        }
+
+        <div class="forgot-link">
+          <a href="#" (click)="olvideContrasena($event)">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn" [disabled]="enviando()">Inicia Sesión</button>
+        <p>Tras 5 intentos fallidos la cuenta se bloquea y solo el administrador puede desbloquearla.</p>
+      </form>
+    </div>
+
+    <div class="form-box register">
+      <form [formGroup]="formRegistro" (ngSubmit)="registrarse()" novalidate>
+        <h1>Registrarse</h1>
+
+        <div class="input-box">
+          <input type="text" placeholder="Usuario (4 a 40 caracteres)" formControlName="username" maxlength="40" autocomplete="username" aria-label="Usuario" />
+          <i class="bx bxs-user"></i>
+          @if (intentoRegistro() && errorUsuario()) {
+            <span class="error-msg">{{ errorUsuario() }}</span>
+          }
+        </div>
+
+        <div class="input-box">
+          <input type="email" placeholder="Email" formControlName="email" autocomplete="email" aria-label="Email" />
+          <i class="bx bxs-envelope"></i>
+          @if (intentoRegistro() && errorEmail()) {
+            <span class="error-msg">{{ errorEmail() }}</span>
+          }
+        </div>
+
+        <div class="input-box">
+          <input type="password" placeholder="Contraseña" formControlName="password" autocomplete="new-password" aria-label="Contraseña" />
+          <i class="bx bxs-lock-alt"></i>
+          @if (intentoRegistro() && errorPassword()) {
+            <span class="error-msg">{{ errorPassword() }}</span>
+          }
+        </div>
+
+        <div class="input-box">
+          <input type="password" placeholder="Confirmar contraseña" formControlName="confirmarPassword" autocomplete="new-password" aria-label="Confirmar contraseña" />
+          <i class="bx bxs-lock-alt"></i>
+          @if (intentoRegistro() && errorConfirmar()) {
+            <span class="error-msg">{{ errorConfirmar() }}</span>
+          }
+        </div>
+
+        <div class="input-box">
+          <label class="terminos">
+            <input type="checkbox" formControlName="aceptaTerminos" />
+            Acepto los <a href="#" (click)="verTerminos($event)">términos y condiciones</a>
+          </label>
+          @if (intentoRegistro() && errorTerminos()) {
+            <span class="error-msg">{{ errorTerminos() }}</span>
+          }
+        </div>
+
+        @if (mensajeRegistro()) {
+          <p class="form-msg error" role="alert">{{ mensajeRegistro() }}</p>
+        }
+
+        <button type="submit" class="btn" [disabled]="enviando()">Registrarse</button>
+      </form>
+    </div>
+
+    <div class="toggle-box">
+      <div class="toggle-panel toggle-left">
+        <h1>¡Hola!</h1>
+        <p>¿No tienes cuenta?</p>
+        <button type="button" class="btn" (click)="cambiarModo(true)">Regístrate</button>
+      </div>
+      <div class="toggle-panel toggle-right">
+        <h1>¡Bienvenido de nuevo!</h1>
+        <p>¿Ya tienes cuenta?</p>
+        <button type="button" class="btn" (click)="cambiarModo(false)">Inicia Sesión</button>
+      </div>
+    </div>
+  </div>
+</section>

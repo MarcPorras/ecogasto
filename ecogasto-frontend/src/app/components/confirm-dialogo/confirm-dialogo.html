@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ datos?.titulo ?? 'Eliminar' }}</h2>
+<mat-dialog-content>
+  <p>{{ datos?.mensaje ?? 'Esta seguro de eliminar este registro?' }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button matButton="outlined" mat-dialog-close>No</button>
+  <button matButton="filled" [mat-dialog-close]="true" cdkFocusInitial>{{ datos?.textoSi ?? 'Si' }}</button>
+</mat-dialog-actions>
