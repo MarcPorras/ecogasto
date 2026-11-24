@@ -1,0 +1,43 @@
+<h2>{{ edicion ? 'Editar' : 'Nuevo' }} tip</h2>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <mat-form-field appearance="outline">
+    <mat-label>Recurso</mat-label>
+    <mat-select formControlName="idRecurso">
+      @for (r of recursos(); track r.idRecurso) {
+        <mat-option [value]="r.idRecurso">{{ r.nombre }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.idRecurso.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.idRecurso.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Segmento</mat-label>
+    <mat-select formControlName="segmento">
+      @for (o of segmentoOpciones; track o) {
+        <mat-option [value]="o">{{ o }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.segmento.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.segmento.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Texto del consejo</mat-label>
+    <textarea matInput formControlName="texto" rows="3"></textarea>
+      @if (form.controls.texto.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.texto.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+  <div class="form-acciones">
+    <a matButton="outlined" routerLink="/admin/tips">Cancelar</a>
+    <button matButton="filled" type="submit" [disabled]="guardando()">Guardar</button>
+  </div>
+</form>

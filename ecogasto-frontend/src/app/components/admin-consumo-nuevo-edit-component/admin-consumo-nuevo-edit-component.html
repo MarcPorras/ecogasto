@@ -1,0 +1,56 @@
+<h2>{{ edicion ? 'Editar' : 'Nuevo' }} consumo</h2>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <mat-form-field appearance="outline">
+    <mat-label>ID del hogar</mat-label>
+    <input matInput type="number" formControlName="idHogar" step="any" />
+      @if (form.controls.idHogar.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.idHogar.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Recurso</mat-label>
+    <mat-select formControlName="idRecurso">
+      @for (r of recursos(); track r.idRecurso) {
+        <mat-option [value]="r.idRecurso">{{ r.nombre }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.idRecurso.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.idRecurso.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Año</mat-label>
+    <input matInput type="number" formControlName="anio" step="any" />
+      @if (form.controls.anio.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.anio.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Mes (1-12)</mat-label>
+    <input matInput type="number" formControlName="mes" step="any" />
+      @if (form.controls.mes.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.mes.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Valor consumido</mat-label>
+    <input matInput type="number" formControlName="valor" step="any" />
+      @if (form.controls.valor.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.valor.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <div class="form-acciones">
+    <a matButton="outlined" routerLink="/admin/consumos">Cancelar</a>
+    <button matButton="filled" type="submit" [disabled]="guardando()">Guardar</button>
+  </div>
+</form>

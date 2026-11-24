@@ -1,0 +1,17 @@
+h2 {
+  margin: 0;
+  color: var(--verde-profundo);
+}
+
+.buscador {
+  padding: 9px 12px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  min-width: 220px;
+  font-family: inherit;
+}
+
+td.vacio {
+  text-align: center;
+  padding: 22px;
+}

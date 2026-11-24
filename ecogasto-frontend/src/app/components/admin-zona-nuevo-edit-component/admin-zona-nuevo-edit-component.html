@@ -1,0 +1,26 @@
+<h2>{{ edicion ? 'Editar' : 'Nuevo' }} zona</h2>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput type="text" formControlName="nombre" />
+      @if (form.controls.nombre.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.nombre.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput formControlName="descripcion" rows="3"></textarea>
+      @if (form.controls.descripcion.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.descripcion.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-checkbox formControlName="activa">Activa</mat-checkbox>
+  <div class="form-acciones">
+    <a matButton="outlined" routerLink="/admin/zonas">Cancelar</a>
+    <button matButton="filled" type="submit" [disabled]="guardando()">Guardar</button>
+  </div>
+</form>

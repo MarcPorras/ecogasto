@@ -1,0 +1,71 @@
+<h2>{{ edicion ? 'Editar' : 'Nuevo' }} usuario</h2>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <mat-form-field appearance="outline">
+    <mat-label>Usuario</mat-label>
+    <input matInput type="text" formControlName="username" />
+      @if (form.controls.username.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.username.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email" />
+      @if (form.controls.email.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.email.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Contraseña</mat-label>
+    <input matInput type="password" formControlName="password" autocomplete="new-password" />
+      @if (form.controls.password.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.password.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre completo</mat-label>
+    <input matInput type="text" formControlName="nombreCompleto" />
+      @if (form.controls.nombreCompleto.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.nombreCompleto.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Segmento</mat-label>
+    <mat-select formControlName="segmento">
+      <mat-option value="">Sin segmento</mat-option>
+      @for (o of segmentoOpciones; track o) {
+        <mat-option [value]="o">{{ o }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.segmento.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.segmento.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Rol</mat-label>
+    <mat-select formControlName="rol">
+      @for (o of rolOpciones; track o) {
+        <mat-option [value]="o">{{ o }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.rol.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.rol.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+  <div class="form-acciones">
+    <a matButton="outlined" routerLink="/admin/usuarios">Cancelar</a>
+    <button matButton="filled" type="submit" [disabled]="guardando()">Guardar</button>
+  </div>
+</form>

@@ -1,0 +1,80 @@
+<section class="acceso">
+  <div class="acceso-tarjeta">
+    <div class="acceso-franja"></div>
+
+    <div class="acceso-cuerpo">
+      <div class="acceso-cabecera">
+        <div class="acceso-logo-caja">
+          <img src="images/LOGO.png" alt="Logo EcoGasto" />
+        </div>
+        <div>
+          <h1>EcoGasto</h1>
+          <span class="acceso-subtitulo">Panel de administración</span>
+        </div>
+      </div>
+
+      <div class="acceso-insignia">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Acceso exclusivo para administradores</span>
+      </div>
+
+      <p class="acceso-intro">
+        Inicia sesión con tu cuenta autorizada para gestionar usuarios, lecturas, tarifas, zonas, eco tips, retos y auditoría.
+      </p>
+
+      @if (mensajeError()) {
+        <div class="acceso-alerta" role="alert">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ mensajeError() }}</span>
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="ingresar()" autocomplete="off" novalidate>
+        <mat-form-field appearance="outline" class="campo-ancho">
+          <mat-label>Usuario administrador</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput type="text" formControlName="username" autocomplete="username" />
+          @if (form.controls.username.hasError('required')) {
+            <mat-error>Ingresa tu usuario</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo-ancho">
+          <mat-label>Contraseña</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput [type]="ocultarPassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password" />
+          <button
+            matIconButton
+            matSuffix
+            type="button"
+            (click)="alternarPassword()"
+            [attr.aria-label]="ocultarPassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+          >
+            <mat-icon>{{ ocultarPassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          @if (form.controls.password.hasError('required')) {
+            <mat-error>Ingresa tu contraseña</mat-error>
+          }
+        </mat-form-field>
+
+        <button matButton="filled" type="submit" class="btn-ingresar" [disabled]="enviando()">
+          <mat-icon>{{ enviando() ? 'hourglass_top' : 'login' }}</mat-icon>
+          <span>{{ enviando() ? 'Verificando acceso…' : 'Ingresar al panel' }}</span>
+        </button>
+      </form>
+
+      <div class="acceso-nota">
+        <mat-icon>verified_user</mat-icon>
+        <p>
+          Las cuentas de usuario estándar son rechazadas automáticamente en este acceso por no contar con el rol
+          <strong>ADMIN</strong>.
+        </p>
+      </div>
+
+      <a routerLink="/home" class="acceso-volver">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Volver a la página principal</span>
+      </a>
+    </div>
+  </div>
+</section>

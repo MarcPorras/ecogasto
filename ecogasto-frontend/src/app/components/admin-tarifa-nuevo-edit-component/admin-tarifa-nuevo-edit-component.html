@@ -1,0 +1,69 @@
+<h2>{{ edicion ? 'Editar' : 'Nuevo' }} tarifa</h2>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <mat-form-field appearance="outline">
+    <mat-label>Recurso</mat-label>
+    <mat-select formControlName="idRecurso">
+      @for (r of recursos(); track r.idRecurso) {
+        <mat-option [value]="r.idRecurso">{{ r.nombre }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.idRecurso.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.idRecurso.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Zona</mat-label>
+    <mat-select formControlName="idZona">
+      @for (z of zonas(); track z.idZona) {
+        <mat-option [value]="z.idZona">{{ z.nombre }}</mat-option>
+      }
+    </mat-select>
+      @if (form.controls.idZona.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.idZona.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Tarifa</mat-label>
+    <input matInput type="number" formControlName="tarifa" step="any" />
+      @if (form.controls.tarifa.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.tarifa.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Umbral bajo</mat-label>
+    <input matInput type="number" formControlName="umbralBajo" step="any" />
+      @if (form.controls.umbralBajo.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.umbralBajo.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Umbral alto</mat-label>
+    <input matInput type="number" formControlName="umbralAlto" step="any" />
+      @if (form.controls.umbralAlto.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.umbralAlto.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Promedio nacional</mat-label>
+    <input matInput type="number" formControlName="promedioNacional" step="any" />
+      @if (form.controls.promedioNacional.hasError('required')) {
+        <mat-error>Campo obligatorio</mat-error>
+      } @else if (form.controls.promedioNacional.invalid) {
+        <mat-error>Valor no válido</mat-error>
+      }
+  </mat-form-field>
+  <div class="form-acciones">
+    <a matButton="outlined" routerLink="/admin/tarifas">Cancelar</a>
+    <button matButton="filled" type="submit" [disabled]="guardando()">Guardar</button>
+  </div>
+</form>

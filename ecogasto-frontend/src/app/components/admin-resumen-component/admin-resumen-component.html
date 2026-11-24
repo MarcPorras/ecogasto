@@ -1,0 +1,38 @@
+<h2 class="titulo">Resumen general</h2>
+
+@if (indicadores(); as i) {
+  <div class="kpis">
+    <div class="kpi"><span class="kpi-valor">{{ i.usuarios }}</span><span class="kpi-etiqueta">Usuarios</span></div>
+    <div class="kpi"><span class="kpi-valor">{{ i.hogares }}</span><span class="kpi-etiqueta">Hogares</span></div>
+    <div class="kpi"><span class="kpi-valor">{{ i.lecturas }}</span><span class="kpi-etiqueta">Lecturas</span></div>
+    <div class="kpi"><span class="kpi-valor">{{ i.alertas }}</span><span class="kpi-etiqueta">Alertas</span></div>
+    <div class="kpi"><span class="kpi-valor">{{ i.pctConCarencia | number: '1.0-1' }}%</span><span class="kpi-etiqueta">Con carencia de servicio</span></div>
+  </div>
+}
+
+<div class="paneles">
+  <section class="panel">
+    <h3>Hogares por nivel de consumo</h3>
+    <div class="grafico-caja"><app-grafico tipo="bar" [etiquetas]="etiquetasNivel()" [series]="seriesNivel()" tituloY="Hogares" /></div>
+  </section>
+
+  <section class="panel">
+    <h3>Carencia de servicio por zona (%)</h3>
+    <div class="grafico-caja"><app-grafico tipo="bar" [horizontal]="true" [etiquetas]="etiquetasCarencia()" [series]="seriesCarencia()" /></div>
+  </section>
+
+  <section class="panel panel--ancho">
+    <div class="panel-cabecera">
+      <h3>Promedio mensual de consumo</h3>
+      <mat-form-field appearance="outline" class="campo-anio">
+        <mat-label>Año</mat-label>
+        <mat-select [ngModel]="anio()" (ngModelChange)="cambiarAnio($event)">
+          @for (a of anios; track a) {
+            <mat-option [value]="a">{{ a }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="grafico-caja"><app-grafico [etiquetas]="meses" [series]="seriesPromedio()" /></div>
+  </section>
+</div>

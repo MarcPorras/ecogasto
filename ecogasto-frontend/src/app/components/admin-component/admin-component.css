@@ -1,0 +1,92 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+  background: #f4f7f4;
+}
+
+.admin-menu {
+  background: var(--verde-profundo);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 12px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 18px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.admin-marca img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #e8f5e9;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+nav a.activo {
+  background: var(--verde);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.admin-pie {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 8px 0;
+}
+
+.admin-pie button {
+  --mat-button-outlined-label-text-color: #ffffff;
+  --mat-button-outlined-outline-color: rgba(255, 255, 255, 0.6);
+}
+
+.admin-contenido {
+  padding: 24px;
+  min-width: 0;
+}
+
+@media (max-width: 800px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-menu {
+    position: static;
+    height: auto;
+  }
+
+  nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
