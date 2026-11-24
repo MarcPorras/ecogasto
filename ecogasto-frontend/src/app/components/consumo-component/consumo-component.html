@@ -1,0 +1,131 @@
+<div class="app-vista">
+  @if (cargando()) {
+    <p class="vacio">Cargando tu consumo…</p>
+  } @else if (hogar()) {
+    <div class="app-hero">
+      <img src="images/ContenidoCentral_PrincipalEcogasto.jpg" alt="" />
+      <div class="app-hero-texto">
+        <h1>Hola, {{ username() }}</h1>
+        <p>{{ resumenHogar() }}</p>
+      </div>
+      <button type="button" class="btn-app btn-app--claro" (click)="editarHogar()">✏️ Editar hogar</button>
+    </div>
+
+    @if (!zonaActiva()) {
+      <div class="aviso-app aviso-app--alerta">
+        La zona {{ hogar()!.zona }} fue desactivada por el administrador. Actualiza la información de tu hogar.
+      </div>
+    } @else if (consumos().length === 0) {
+      <div class="aviso-app">Registra tu primera lectura para ver tu gráfico, tu impacto ambiental y tu Eco Tip personalizado.</div>
+    }
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-valor">{{ kpis().periodo }}</div>
+        <div class="kpi-etiqueta">Último mes registrado</div>
+      </div>
+      <div class="kpi kpi--amarillo">
+        <div class="kpi-valor">{{ kpis().gasto === null ? 'S/ —' : 'S/ ' + (kpis().gasto! | number: '1.2-2') }}</div>
+        <div class="kpi-etiqueta">Gasto estimado de ese mes</div>
+      </div>
+      <div class="kpi" [class.kpi--rojo]="kpis().altos.length > 0" [class.kpi--azul]="kpis().altos.length === 0">
+        <div class="kpi-valor">{{ kpis().altos.length > 0 ? kpis().altos.join(', ') : 'Ninguno' }}</div>
+        <div class="kpi-etiqueta">Servicios con consumo alto en tu zona</div>
+      </div>
+      <div class="kpi" [class.kpi--rojo]="noLeidas() > 0">
+        <div class="kpi-valor">{{ noLeidas() }}</div>
+        <div class="kpi-etiqueta">Notificaciones sin leer</div>
+      </div>
+    </div>
+
+    <div class="recursos-grid">
+      @for (tarjeta of tarjetas(); track tarjeta.recurso.idRecurso) {
+        @if (!tarjeta.tiene) {
+          <article class="recurso-card sin-servicio">
+            <div class="rc-cabecera">
+              <span class="rc-nombre">{{ tarjeta.recurso.nombre }}</span>
+              <span class="rc-icono">{{ icono(tarjeta.recurso.nombre) }}</span>
+            </div>
+            <div class="rc-detalle">Tu hogar no cuenta con este servicio.</div>
+            <div class="rc-acciones">
+              <button type="button" class="btn-app btn-app--claro btn-app--pequeno" (click)="editarHogar()">Actualizar hogar</button>
+            </div>
+          </article>
+        } @else {
+          <article class="recurso-card" [class.seleccionada]="tarjeta.recurso.idRecurso === seleccionado()" tabindex="0" (click)="seleccionar(tarjeta.recurso.idRecurso)" (keydown.enter)="seleccionar(tarjeta.recurso.idRecurso)">
+            <div class="rc-cabecera">
+              <span class="rc-nombre">{{ tarjeta.recurso.nombre }}</span>
+              <span class="rc-icono">{{ icono(tarjeta.recurso.nombre) }}</span>
+            </div>
+            @if (tarjeta.ultima) {
+              <div class="rc-valor">{{ tarjeta.ultima.valor | number: '1.0-1' }} <small class="unidad">{{ tarjeta.recurso.unidad }}</small></div>
+              <div class="rc-detalle">{{ tarjeta.periodo }} · S/ {{ costoDe(tarjeta.ultima) | number: '1.2-2' }}</div>
+              <div>
+                <span class="nivel" [class]="'nivel nivel--' + tarjeta.nivel">Consumo {{ etiquetaNivel(tarjeta.nivel).toLowerCase() }}</span>
+              </div>
+            } @else {
+              <div class="rc-detalle">Aún no registras lecturas.</div>
+            }
+            <div class="rc-acciones">
+              <button type="button" class="btn-app btn-app--pequeno" (click)="$event.stopPropagation(); registrarDesdeTarjeta(tarjeta.recurso.idRecurso)">+ Registrar lectura</button>
+            </div>
+          </article>
+        }
+      }
+    </div>
+
+    <div class="consumo-layout">
+      <div class="app-bloque">
+        <div class="bloque-cabecera">
+          <h2>{{ tituloGrafico() }}</h2>
+          <div class="controles">
+            <label for="recursoGrafico" class="sr-only">Servicio</label>
+            <select id="recursoGrafico" [value]="seleccionado()" (change)="cambiarRecurso(+$any($event.target).value)">
+              @for (recurso of recursosHogar(); track recurso.idRecurso) {
+                <option [value]="recurso.idRecurso" [selected]="recurso.idRecurso === seleccionado()">{{ icono(recurso.nombre) }} {{ recurso.nombre }}</option>
+              }
+            </select>
+            <label for="anioGrafico" class="sr-only">Año</label>
+            <select id="anioGrafico" (change)="cambiarAnio(+$any($event.target).value)">
+              @for (anio of aniosConDatos(); track anio) {
+                <option [value]="anio" [selected]="anio === anioGrafico()">{{ anio }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <p class="bloque-nota">La línea punteada es el promedio nacional de referencia para tu zona, definido en la tabla de tarifas.</p>
+        @if (hayDatosGrafico()) {
+          <div class="grafico-caja">
+            <app-grafico [etiquetas]="etiquetasGrafico" [series]="seriesGrafico()" [tituloY]="recursoSeleccionado()?.unidad ?? ''" />
+          </div>
+        } @else {
+          <div class="vacio">
+            <p>Aún no registras lecturas de este servicio en {{ anioGrafico() }}.</p>
+          </div>
+        }
+      </div>
+
+      <div id="bloque-lectura">
+        <app-consumo-lectura-component
+          [hogar]="hogar()!"
+          [recursos]="recursosHogar()"
+          [tarifas]="tarifas()"
+          [consumos]="consumos()"
+          [seleccionado]="seleccionado()"
+          [edicion]="edicion()"
+          (guardado)="lecturaGuardada()"
+          (cancelado)="terminarEdicion()"
+        />
+      </div>
+    </div>
+
+    <app-consumo-historial-component
+      [consumos]="consumos()"
+      [recursos]="recursosHogar()"
+      [tarifas]="tarifas()"
+      [hogar]="hogar()!"
+      (editar)="empezarEdicion($event)"
+      (eliminado)="lecturaEliminada()"
+    />
+  }
+</div>

@@ -1,0 +1,25 @@
+.contenedor {
+  max-width: 640px;
+}
+
+.tarjeta {
+  padding: 26px 28px;
+}
+
+.modal-hogar {
+  padding: 26px 28px;
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  color: var(--texto);
+}
+
+.modal-hogar h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--verde-profundo);
+  margin: 0 0 6px;
+}
+
+.campo-fila mat-form-field {
+  width: 100%;
+}

@@ -1,0 +1,66 @@
+<div [class.app-vista]="!esDialogo" [class.contenedor]="!esDialogo">
+  <div [class.app-bloque]="!esDialogo" [class.tarjeta]="!esDialogo" [class.modal-hogar]="esDialogo">
+    <h2>🏡 Información de tu hogar</h2>
+    <p class="nota-modal">Con estos datos calculamos tus costos, tu impacto ambiental y con qué hogares compararte.</p>
+
+    @if (cargando()) {
+      <p class="vacio">Cargando…</p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+        <div class="campo">
+          <mat-checkbox formControlName="esPadre">Soy padre o madre de familia</mat-checkbox>
+        </div>
+
+        <div class="campo-fila">
+          <mat-form-field appearance="outline">
+            <mat-label>Personas en el hogar</mat-label>
+            <input matInput type="number" min="1" max="20" step="1" formControlName="numPersonas" />
+            @if (form.controls.numPersonas.invalid) {
+              <mat-error>Indica entre 1 y 20 personas</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Zona</mat-label>
+            <mat-select formControlName="idZona" placeholder="Elige tu zona">
+              @for (zona of zonas(); track zona.idZona) {
+                <mat-option [value]="zona.idZona">{{ zona.nombre }}</mat-option>
+              }
+            </mat-select>
+            @if (form.controls.idZona.invalid) {
+              <mat-error>Selecciona tu zona</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="campo">
+          <span class="campo-titulo">Servicios con los que cuenta tu hogar</span>
+          <div class="casillas">
+            @for (recurso of recursos(); track recurso.idRecurso) {
+              <mat-checkbox [checked]="estaMarcado(recurso.idRecurso)" (change)="alternar(recurso.idRecurso, $event.checked)">
+                {{ icono(recurso.nombre) }} {{ recurso.nombre }}
+              </mat-checkbox>
+            }
+          </div>
+          <small class="campo-ayuda">Solo podrás registrar lecturas de los servicios que marques.</small>
+          @if (errorServicios()) {
+            <p class="form-msg error">Marca al menos un servicio disponible</p>
+          }
+        </div>
+
+        @if (mensaje()) {
+          <p class="form-msg error" role="alert">{{ mensaje() }}</p>
+        }
+
+        <div class="form-acciones">
+          <button type="button" matButton="outlined" (click)="cancelar()">
+            {{ edicion() ? 'Cancelar' : 'Cerrar sesión' }}
+          </button>
+          <button type="submit" matButton="filled" [disabled]="guardando()">
+            {{ edicion() ? 'Guardar cambios' : 'Guardar y continuar' }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>
