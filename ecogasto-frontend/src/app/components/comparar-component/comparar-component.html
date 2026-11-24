@@ -1,0 +1,71 @@
+<div class="app-vista">
+  <div class="app-encabezado">
+    <div>
+      <h1>📊 Comparación con otros hogares</h1>
+      <p>
+        Solo se comparan hogares de tu misma zona con una persona más o una menos que el tuyo. Tu hogar no entra en el promedio y no se muestra ningún dato personal de los demás.
+      </p>
+    </div>
+    <div class="controles">
+      <label for="compararPeriodo">Mes</label>
+      <select id="compararPeriodo" (change)="cambiarPeriodo($any($event.target).value)">
+        @for (p of periodos(); track p.clave) {
+          <option [value]="p.clave" [selected]="p.clave === periodoClave()">{{ p.etiqueta }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  @if (cargando()) {
+    <p class="vacio">Cargando…</p>
+  } @else if (periodos().length === 0) {
+    <div class="app-bloque vacio">Registra al menos una lectura para compararte con otros hogares.</div>
+  } @else if (!hayHogares()) {
+    <div class="app-bloque vacio">
+      Aún no hay hogares similares en tu zona ({{ hogarService.hogar()?.zona }}, {{ hogarService.hogar()?.numPersonas }} personas ± 1) para comparar este mes.
+    </div>
+  } @else {
+    <div class="consumo-layout">
+      <div class="app-bloque">
+        <h2>Diferencia frente a hogares similares</h2>
+        <div class="grafico-caja">
+          <app-grafico tipo="bar" [etiquetas]="etiquetas()" [series]="series()" tituloY="% de diferencia" />
+        </div>
+      </div>
+      <div class="app-bloque">
+        <h2>Detalle</h2>
+        <div class="tabla-scroll">
+          <table class="tabla-app">
+            <thead>
+              <tr>
+                <th>Servicio</th>
+                <th class="num">Mi valor</th>
+                <th class="num">Similares</th>
+                <th class="num">Diferencia</th>
+                <th class="num">Hogares</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (fila of filas(); track fila.recurso) {
+                <tr>
+                  <td>{{ icono(fila.recurso) }} {{ fila.recurso }}</td>
+                  <td class="num">{{ fila.miValor | number: '1.0-1' }}</td>
+                  <td class="num">{{ fila.promedioReferencia | number: '1.0-1' }}</td>
+                  <td class="num" [class.dif-mas]="fila.diferenciaPct > 0" [class.dif-menos]="fila.diferenciaPct <= 0">
+                    {{ fila.diferenciaPct > 0 ? '+' : '' }}{{ fila.diferenciaPct | number: '1.0-1' }}%
+                  </td>
+                  <td class="num">{{ fila.cantidadHogares }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        @if (mensaje()) {
+          <p class="mensaje-comparacion">{{ mensaje() }}</p>
+        }
+      </div>
+    </div>
+  }
+
+  <a routerLink="/consumo" class="btn-app btn-app--claro">← Volver a Mi Consumo</a>
+</div>

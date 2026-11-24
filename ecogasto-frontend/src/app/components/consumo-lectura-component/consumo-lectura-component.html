@@ -1,0 +1,72 @@
+<div class="app-bloque">
+  <h2>{{ edicion() ? 'Corregir lectura' : 'Registrar lectura' }}</h2>
+  <p class="bloque-nota">
+    Anota el consumo de tu recibo del mes. No se pueden registrar meses futuros ni repetir un mes ya registrado.
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+    <mat-form-field appearance="outline" class="completo">
+      <mat-label>Servicio</mat-label>
+      <mat-select formControlName="idRecurso" (selectionChange)="cambiarRecurso()">
+        @for (recurso of recursos(); track recurso.idRecurso) {
+          <mat-option [value]="recurso.idRecurso">{{ icono(recurso.nombre) }} {{ recurso.nombre }}</mat-option>
+        }
+      </mat-select>
+      @if (form.controls.idRecurso.invalid) {
+        <mat-error>Selecciona el servicio</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="campo-fila">
+      <mat-form-field appearance="outline">
+        <mat-label>Mes</mat-label>
+        <mat-select formControlName="mes">
+          @for (mes of meses; track mes.valor) {
+            <mat-option [value]="mes.valor">{{ mes.nombre }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Año</mat-label>
+        <input matInput type="number" [min]="anioMinimo" step="1" formControlName="anio" />
+        @if (form.controls.anio.invalid) {
+          <mat-error>Año inválido (desde {{ anioMinimo }})</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="completo">
+      <mat-label>Valor</mat-label>
+      <input matInput type="number" min="0.01" step="0.01" formControlName="valor" />
+      @if (recursoActual()) {
+        <span matTextSuffix>{{ recursoActual()!.unidad }}</span>
+      }
+      @if (form.controls.valor.invalid && form.controls.valor.touched) {
+        <mat-error>El consumo debe ser mayor a 0</mat-error>
+      } @else {
+        <mat-hint>Agua en L/día por persona, luz en kWh, gas en m³ y transporte en soles al mes.</mat-hint>
+      }
+    </mat-form-field>
+
+    @if (vista(); as v) {
+      <p class="costo-preview">
+        Costo estimado: <strong>S/ {{ v.costo ?? 0 | number: '1.2-2' }}</strong> ·
+        <span class="nivel" [class]="'nivel nivel--' + v.nivel">{{ v.etiqueta }}</span>
+      </p>
+    }
+
+    @if (mensaje()) {
+      <p class="form-msg error" role="alert">{{ mensaje() }}</p>
+    }
+
+    <div class="form-acciones">
+      @if (edicion()) {
+        <button type="button" class="btn-app btn-app--claro" (click)="cancelar()">Cancelar edición</button>
+      }
+      <button type="submit" class="btn-app" [disabled]="guardando()">
+        {{ edicion() ? 'Actualizar lectura' : 'Guardar lectura' }}
+      </button>
+    </div>
+  </form>
+</div>

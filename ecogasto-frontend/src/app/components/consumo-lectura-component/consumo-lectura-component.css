@@ -1,0 +1,13 @@
+.completo {
+  width: 100%;
+}
+
+.campo-fila mat-form-field {
+  width: 100%;
+}
+
+.costo-preview {
+  font-size: 14px;
+  color: #01579b;
+  margin: 4px 0 10px;
+}

@@ -1,0 +1,20 @@
+.grid-estadisticas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.grid-estadisticas .app-bloque {
+  margin-bottom: 0;
+}
+
+.grid-estadisticas .grafico-caja {
+  height: 240px;
+}
+
+h3 {
+  font-size: 16px;
+  color: var(--verde-profundo);
+  margin-bottom: 8px;
+}

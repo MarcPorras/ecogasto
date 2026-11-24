@@ -1,0 +1,50 @@
+<div class="app-vista">
+  <div class="app-encabezado">
+    <div>
+      <h1>📈 Estadísticas locales</h1>
+      <p>Consumo promedio mensual de todos los hogares de la zona elegida. Tu zona aparece seleccionada por defecto.</p>
+    </div>
+    <div class="controles">
+      <label for="zonaSelect">Zona</label>
+      <select id="zonaSelect" (change)="cambiarZona($any($event.target).value)">
+        @for (zona of zonas(); track zona.idZona) {
+          <option [value]="zona.idZona" [selected]="zona.idZona === idZona()">{{ zona.nombre }}</option>
+        }
+      </select>
+      <label for="anioEstadisticas">Año</label>
+      <select id="anioEstadisticas" (change)="cambiarAnio($any($event.target).value)">
+        @for (a of anios; track a) {
+          <option [value]="a" [selected]="a === anio()">{{ a }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  @if (cargando()) {
+    <p class="vacio">Cargando…</p>
+  } @else if (resumen().length === 0) {
+    <div class="app-bloque vacio">No hay lecturas registradas en esta zona para el año elegido.</div>
+  } @else {
+    <div class="kpis">
+      @for (fila of resumen(); track fila.recurso.idRecurso) {
+        <div class="kpi">
+          <div class="kpi-valor">{{ fila.promedio | number: '1.0-1' }} <small class="unidad">{{ fila.recurso.unidad }}</small></div>
+          <div class="kpi-etiqueta">{{ icono(fila.recurso.nombre) }} Promedio de {{ fila.recurso.nombre.toLowerCase() }} en {{ zonaNombre() }}</div>
+        </div>
+      }
+    </div>
+
+    <div class="grid-estadisticas">
+      @for (grafico of graficos(); track grafico.recurso.idRecurso) {
+        <div class="app-bloque">
+          <h3>{{ icono(grafico.recurso.nombre) }} {{ grafico.recurso.nombre }}</h3>
+          <div class="grafico-caja">
+            <app-grafico [etiquetas]="etiquetas" [series]="grafico.series" />
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <a routerLink="/consumo" class="btn-app btn-app--claro">← Volver a Mi Consumo</a>
+</div>
