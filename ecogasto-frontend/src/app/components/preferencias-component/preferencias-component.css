@@ -1,0 +1,15 @@
+fieldset {
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 10px 16px 10px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+
+legend {
+  font-weight: 700;
+  color: var(--verde-profundo);
+  padding: 0 6px;
+}

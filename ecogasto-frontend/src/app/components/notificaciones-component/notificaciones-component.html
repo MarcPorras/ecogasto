@@ -1,0 +1,31 @@
+<div class="app-vista">
+  <div class="app-encabezado">
+    <div>
+      <h1>🔔 Tus notificaciones</h1>
+      <p>{{ resumen() }}</p>
+    </div>
+  </div>
+
+  <div class="app-bloque">
+    @if (cargando()) {
+      <p class="vacio">Cargando…</p>
+    } @else {
+      @for (n of lista(); track n.idNotificacion) {
+        <div class="noti-card" [class.no-leida]="!n.leida" [class.alerta]="esAlerta(n)">
+          <strong>{{ icono(n.recurso) }} {{ n.titulo }}</strong>
+          <p>{{ n.mensaje }}</p>
+          <small>{{ n.fecha | date: 'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+      } @empty {
+        <p class="vacio">No tienes notificaciones por ahora. Cuando tu consumo se dispare, te avisaremos aquí.</p>
+      }
+    }
+
+    <div class="grupo-botones">
+      <button type="button" class="btn-app" [disabled]="noLeidas() === 0" (click)="marcarLeidas()">✔ Marcar todas como leídas</button>
+      <button type="button" class="btn-app btn-app--peligro" [disabled]="lista().length === 0" (click)="eliminarTodas()">🗑 Eliminar todas</button>
+      <a routerLink="/preferencias" class="btn-app btn-app--claro">⚙ Preferencias</a>
+      <a routerLink="/consumo" class="btn-app btn-app--claro">Volver</a>
+    </div>
+  </div>
+</div>

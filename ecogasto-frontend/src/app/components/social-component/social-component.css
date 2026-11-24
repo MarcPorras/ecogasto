@@ -1,0 +1,34 @@
+.contenedor-social {
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.cabecera-social {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #ffffff;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.titulo-social {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.puntos-social {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.contenido-tab {
+  padding: 20px;
+  min-height: 420px;
+}

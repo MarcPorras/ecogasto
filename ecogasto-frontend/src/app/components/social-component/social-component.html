@@ -1,0 +1,41 @@
+<div class="app-vista">
+  <div class="contenedor-social">
+    <div class="cabecera-social">
+      <div class="titulo-social">🌱 Social Media · EcoGasto</div>
+      <div class="puntos-social">{{ puntos() }} pts</div>
+    </div>
+
+    <mat-tab-group [selectedIndex]="pestana()" (selectedIndexChange)="pestana.set($event)" animationDuration="200ms" mat-stretch-tabs="false" mat-align-tabs="start">
+      <mat-tab label="Mis Logros">
+        <ng-template matTabContent>
+          <div class="contenido-tab"><app-social-logros-component (verRetos)="irARetos()" /></div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Comunidad">
+        <ng-template matTabContent>
+          <div class="contenido-tab"><app-social-comunidad-component /></div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Fotos">
+        <ng-template matTabContent>
+          <div class="contenido-tab"><app-social-fotos-component /></div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Resumen">
+        <ng-template matTabContent>
+          <div class="contenido-tab"><app-social-resumen-component /></div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Reto Sostenible">
+        <ng-template matTabContent>
+          <div class="contenido-tab"><app-social-retos-component (actualizado)="actualizarPuntos()" /></div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Ranking">
+        <ng-template matTabContent>
+          <div class="contenido-tab"><app-social-ranking-component /></div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

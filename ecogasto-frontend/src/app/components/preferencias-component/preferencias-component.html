@@ -1,0 +1,35 @@
+<div class="app-vista">
+  <div class="app-encabezado">
+    <div>
+      <h1>⚙️ Preferencias de notificación</h1>
+      <p>Elige de qué servicios quieres recibir alertas de consumo anómalo. Los cambios se aplican a las siguientes lecturas.</p>
+    </div>
+  </div>
+
+  <div class="app-bloque">
+    @if (cargando()) {
+      <p class="vacio">Cargando…</p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="guardar()">
+        <fieldset>
+          <legend>Alertas de consumo anómalo</legend>
+          <mat-checkbox formControlName="notifAgua">💧 Agua</mat-checkbox>
+          <mat-checkbox formControlName="notifLuz">⚡ Luz</mat-checkbox>
+          <mat-checkbox formControlName="notifGas">🔥 Gas</mat-checkbox>
+          <mat-checkbox formControlName="notifTransporte">🚌 Transporte</mat-checkbox>
+        </fieldset>
+
+        <fieldset>
+          <legend>Otros avisos</legend>
+          <mat-checkbox formControlName="aceptaRetos">Participar en retos sostenibles</mat-checkbox>
+          <mat-checkbox formControlName="recordatorioSemanal">Recordatorio semanal para registrar mi consumo</mat-checkbox>
+        </fieldset>
+
+        <div class="form-acciones">
+          <a routerLink="/notificaciones" class="btn-app btn-app--claro">Cancelar</a>
+          <button type="submit" class="btn-app" [disabled]="guardando()">Guardar</button>
+        </div>
+      </form>
+    }
+  </div>
+</div>
